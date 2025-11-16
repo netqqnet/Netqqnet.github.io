@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "老倔驴"
   text: "已帮助千人降低费率"
-  tagline: 一起做时间的朋友
+  tagline:
   actions:
     - theme: brand
       text: 我要开户🚀
