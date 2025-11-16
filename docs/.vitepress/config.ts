@@ -4,16 +4,26 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 // Teek 主题配置
 const teekConfig = defineTeekConfig({
     themeEnhance: {
+      enabled: true,
+      position:"top",
       themeColor: {
         // https://vp.teek.top/guide/theme-enhance.html#%E4%B8%BB%E9%A2%98%E9%A3%8E%E6%A0%BC
-         defaultColorName: "ep-red",
+         defaultColorName: "vp-red",
+         disableHelp: true,
          //disabled:true,
+         disabled: false,
+         defaultSpread: true,
+         customize: {
+          vitepressTheme: true,
+          elementPlusTheme: false,
+         }
       }, 
       spotlight: {
       disabled: true,
       },
+      // 布局切换配置
       layoutSwitch: {
-      disabled: true,
+        disabled: true, // 禁用布局切换
       },
     },
     teekHome: false, // 启用 Teek 首页
@@ -21,42 +31,36 @@ const teekConfig = defineTeekConfig({
     name: "老倔驴", // 作者名称
     link: "https://github.com/Kele-Bingtang", // 点击作者名称后跳转的链接
     },
+  // 页脚配置
+    footerInfo: {
+      // 页脚信息，支持 HTML 格式（位于主题版权上方）
+      topMessage: ["已帮助上千人降低交易成本，满意度100%！"],
+      // 页脚信息，支持 HTML 格式（位于主题版权下方）
+      // bottomMessage: ["上面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+      // 主题版权配置
+      theme: {
+        show: false, // 是否显示主题版权，建议显示
+        // name: "", // 自定义名称
+        // link: "", // 自定义链接
+      },
+      // 博客版权配置
+      copyright: {
+        show: true, // 是否显示博客版权
+        createYear: 2021, // 创建年份
+        suffix: "老倔驴", // 后缀
+      },
+      // ICP 备案信息配置
+      icpRecord: {
+        name: "蜀ICP备2025135343号",
+        link: "http://beian.miit.gov.cn/",
+      },
+    },    
 });
 const description = ["不仅仅是万一免五，持续更新的投资学习站,聚合多家优质券商，帮你寻找最优的交易费率"].toString();
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: teekConfig,
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    logo: "/teek-logo-mini.svg",
-    darkModeSwitchLabel: "主题",
-    sidebarMenuLabel: "菜单",
-    returnToTopLabel: "返回顶部",
-    lastUpdatedText: "上次更新时间",
-    outline: {
-      level: [2, 4],
-      label: "本页导航",
-    },
-    docFooter: {
-      prev: "上一页",
-      next: "下一页",
-    },
-    nav: [
-      { text: '首页', link: '/' }, 
-      { text: "我要开户🔥", link: '/m5kh' }
-    ],
-    search: {
-      provider: 'local'
-    },
-    socialLinks: [
-      { icon: 'twitter', link: 'https://x.com/Ericlin668' }
-    ],
-    footer: {
-      message: '',
-      copyright: 'Copyright © 2023-present 老倔驴'
-    }
-  },
   title: "老倔驴",
   description: description,
   cleanUrls: false,
@@ -65,9 +69,9 @@ export default defineConfig({
   head: [
     [
       "link",
-      { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.ico" },
     ],
-    ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
+    ["link", { rel: "icon", type: "image/png", href: "/favicon.ico" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:locale", content: "zh-CN" }],
     ["meta", { property: "og:title", content: "老倔驴" }],
@@ -87,6 +91,32 @@ export default defineConfig({
     // ],
     ["meta", { name: "keywords", description }],
   ],
+  themeConfig: {
+    // https://vitepress.dev/reference/default-theme-config
+    logo: "/logo-mini.png",
+    darkModeSwitchLabel: "主题",
+    sidebarMenuLabel: "菜单",
+    returnToTopLabel: "返回顶部",
+    lastUpdatedText: "上次更新时间",
+    outline: {
+      level: [2, 4],
+      label: "本页导航",
+    },
+    docFooter: {
+      prev: "上一页",
+      next: "下一页",
+    },
+    nav: [
+      { text: '首页', link: '/' }, 
+      { text: "福利开户🔥", link: '/m5kh' }
+    ],
+    search: {
+      provider: 'local'
+    },
+    socialLinks: [
+      { icon: 'twitter', link: 'https://x.com/Ericlin668' }
+    ],
+  },
   markdown: {
     // 开启行号
     lineNumbers: true,

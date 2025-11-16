@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "老倔驴"
-  text: "靠谱的投资扫盲站"
-  tagline: 只有靠谱的投资知识和更低的费率
+  text: "已帮助千人降低费率"
+  tagline: 一起做时间的朋友
   actions:
     - theme: brand
       text: 我要开户🚀
@@ -13,9 +13,9 @@ hero:
     - theme: alt
       text: 我要学习
       link: /api-examples
-    - image:
-      src: /teek-logo-large.png
-      alt: Teek
+  image:
+    src: /donkey-large.png
+    alt: donkey
 features:
   - title:   时刻冷静
     details: 保持情绪稳定，不受市场波动影响
@@ -40,10 +40,6 @@ features:
   - title: 靠谱开户
     details: 聚合十多家优质券商，帮你选择最优费率方案，股票万0.7，两融2.6%起
 
-description:
-  - 故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt
-  - 积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu
-  - 这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw
 ---
 <style>
 /* :root {
@@ -110,11 +106,3 @@ onMounted(() => {
     <!-- {{ frontmatter.hero.image?.alt }} -->
   </div>
 </template>
-## Getting Started
-
-You can get started using VitePress right away using `npx`!
-
-```sh
-npm init
-npx vitepress init
-```
