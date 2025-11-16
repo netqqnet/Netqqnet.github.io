@@ -2,7 +2,7 @@
 title: 免五开户
 author: 老倔驴
 date: 2025-11-17
-permalink: /m5kh.html
+permalink: /kh
 sidebar: false
 layout: doc
 ---
