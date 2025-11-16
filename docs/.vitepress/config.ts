@@ -60,6 +60,7 @@ const description = ["不仅仅是万一免五，持续更新的投资学习站,
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base : "/main",
   extends: teekConfig,
   title: "老倔驴",
   description: description,

@@ -12,7 +12,7 @@ hero:
       link: /m5kh
     - theme: alt
       text: 我要学习
-      link: /api-examples
+      link: #
   image:
     src: /donkey-large.png
     alt: donkey
