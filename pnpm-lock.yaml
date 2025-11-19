@@ -18,6 +18,12 @@ importers:
       echarts:
         specifier: ^5.6.0
         version: 5.6.0
+      entities:
+        specifier: 3.0.1
+        version: 3.0.1
+      estree-walker:
+        specifier: 2.0.2
+        version: 2.0.2
       sass:
         specifier: ^1.89.1
         version: 1.93.2
@@ -795,6 +801,10 @@ packages:
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
+  entities@3.0.1:
+    resolution: {integrity: sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==}
+    engines: {node: '>=0.12'}
 
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
@@ -2182,6 +2192,8 @@ snapshots:
   emoji-regex-xs@1.0.0: {}
 
   emoji-regex@8.0.0: {}
+
+  entities@3.0.1: {}
 
   entities@4.5.0: {}
 
