@@ -18,12 +18,12 @@ importers:
       echarts:
         specifier: ^5.6.0
         version: 5.6.0
-      entities:
-        specifier: 3.0.1
-        version: 3.0.1
-      estree-walker:
-        specifier: 2.0.2
-        version: 2.0.2
+      # entities:
+      #   specifier: 3.0.1
+      #   version: 3.0.1
+      # estree-walker:
+      #   specifier: 2.0.2
+      #   version: 2.0.2
       sass:
         specifier: ^1.89.1
         version: 1.93.2
