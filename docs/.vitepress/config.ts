@@ -118,7 +118,7 @@ export default defineConfig({
     },
     nav: [
       { text: '首页', link: '/' }, 
-      { text: "福利开户🔥", link: '/m5kh' }
+      { text: "福利开户🔥", link: '/kh' }
     ],
     search: {
       provider: 'local'
