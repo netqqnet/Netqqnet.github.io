@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 我要开户🚀
-      link: /m5kh
+      link: /kh
     - theme: alt
       text: 我要学习
       link: #
