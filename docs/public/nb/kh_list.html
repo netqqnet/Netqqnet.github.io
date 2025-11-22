@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>券商费率列表-仅限内部</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* 更新时间样式 - 显示在tfoot中 */
+        .update-time {
+            font-size: 12px;
+            color: #666;
+            text-align: left;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+        }
+        
+        /* 复制图片时添加边框和留白 */
+        .table-container-copy {
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin: 0;
+            height: fit-content;
+        }
+        .table-container-copy table{
+            width: 500px;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+        }
+        .table-container-copy th,.table-container-copy td{
+            border: 1px solid #686868;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* 密码保护样式 */
+        #password-protection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+        
+        #password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+        }
+        
+        #password-input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        #password-submit {
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        #password-submit:hover {
+            background: #2980b9;
+        }
+        
+        /* 复制图片按钮 */
+        .copy-image-btn {
+            padding: 5px 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .copy-image-btn:hover {
+            background: #2ecc71;
+        }
+        
+        
+        h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h2 {
+            font-size: 20px;
+            color: #34495e;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        
+        /* 其余表格宽度限制为500px */
+        .single-broker table {
+            max-width: 500px;
+        }
+        
+        
+        table {
+            width: auto;
+            border-collapse: collapse;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        /* 表格1和表格2的样式 - 标题列不换行 */
+        #table1 th,
+        #table2 th {
+            padding: 10px 7px;
+            border-bottom: 1px solid #333;
+        }
+        
+        /* 所有表格的标题列不换行 */
+        /* th {
+            white-space: nowrap;
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        } */
+        
+        td {
+            padding: 10px 5px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .broker-cell {
+            font-weight: 500;
+        }
+        .broker-cell div{
+            position: relative;
+            width: fit-content;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        .recommend-tag {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            position: absolute;
+            top: -10px;
+            right: -30px;
+        }
+        .single-broker .recommend-tag{
+            position: absolute;
+            top: -3px;
+            right: auto;
+            left: 10px;
+            font-size: 0.9em;
+            padding: 5px 8px;
+        }        
+        .highlight {
+            background-color: #fff3cd;
+        }
+        
+        .software-support {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .software-badge {
+            background-color: #f3f8fc;
+            color: #77899b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: .85em;
+        }
+        
+        .subtitle {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: normal;
+            margin-top: 2px;
+            display: block;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .checkbox-group label {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .single-broker {
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        .single-broker h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .single-broker td,
+        .single-broker th{
+            font-size: 13px;
+            border: 1px solid #333;
+        } 
+        .single-broker tbody th{
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .single-broker table caption{
+            width: 100px;
+            font-size: 14px;
+            color: #666;
+            font-weight: normal;
+            margin-top: 2px;
+            display: block;
+        }
+        
+        .fee-highlight {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+        
+        /* 复选框组样式 */
+        .broker-checkboxes {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .broker-checkboxes label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .checkbox-group {
+                display: none;
+            }
+            
+        }
+        
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .sidebar-nav {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                margin-bottom: 20px;
+                max-height: none;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="password-protection">
+        <h2>请输入密码/h2>
+        <form id="password-form">
+            <input type="password" id="password-input" placeholder="请输入密码">
+            <button type="submit" id="password-submit">确定</button>
+        </form>
+    </div>
+    
+    <div class="container" id="content-container" style="display: none;">
+        <h2>最新费率表(保密等级:机密)</h2>        
+        <div class="checkbox-group">
+            <h3>选择要显示的券商：</h3>
+            <div class="broker-checkboxes" id="broker-checkboxes">
+                <!-- 券商复选框将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <h2>表1：对外公开表</h2>
+        <div class="table-container">
+            <table id="table1" style="width: 900px;">
+                <thead>
+                    <tr>
+                        <th style="min-width: 100px;">券商</th>
+                        <th style="min-width: 40px;">门槛</th>
+                        <th style="min-width: 80px;">股票</th>
+                        <th style="min-width: 80px;">过户费</th>
+                        <th style="min-width: 80px;">ETF</th>
+                        <th style="min-width: 60px;">逆回购</th>
+                        <th style="min-width: 120px;">可转债</th>
+                        <th style="min-width: 70px;">港股通</th>
+                        <th style="min-width: 70px;">北交所</th>
+                        <th style="min-width: 100px;">软件支持</th>
+                    </tr>
+                </thead>
+                <tbody id="table1-body">
+                    <!-- 表格数据将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <h2>表2：私聊可发</h2>
+        <div class="table-container">
+            <table id="table2" style="width: 1050px;">
+                <thead>
+                    <tr>
+                       <th style="min-width: 100px;">券商</th>
+                        <th style="min-width: 40px;">门槛</th>
+                        <th style="min-width: 80px;">股票</th>
+                        <th style="min-width: 80px;">过户费</th>
+                        <th style="min-width: 80px;">ETF</th>
+                        <th style="min-width: 60px;">逆回购</th>
+                        <th style="min-width: 110px;">可转债</th>
+                        <th style="min-width: 70px;">港股通</th>
+                        <th style="min-width: 70px;">北交所</th>
+                        <th style="min-width: 100px;">软件支持</th>
+                        <th style="min-width: 180px;">永久费率要求</th>
+                    </tr>
+                </thead>
+                <tbody id="table2-body">
+                    <!-- 表格数据将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <h2>详细表</h2>
+        <div id="single-broker-tables">
+            <!-- 单个券商表格将通过JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <script>
+        // 券商数据
+        // 券商数据 - 将从外部JSON文件加载
+        let brokers = [];
+        
+        // 异步加载JSON数据
+        async function loadBrokerData() {
+            try {
+                // 直接使用相对路径，确保与HTML文件在同一目录下
+                console.log('开始加载券商数据...');
+                const response = await fetch('broker_data.json');
+                
+                if (!response.ok) {
+                    const errorMsg = `HTTP错误! 状态码: ${response.status}`;
+                    console.error(errorMsg);
+                    throw new Error(errorMsg);
+                }
+                
+                console.log('数据响应成功，开始解析JSON...');
+                const data = await response.json();
+                
+                // 验证数据格式是否正确
+                if (!Array.isArray(data)) {
+                    throw new Error('JSON数据格式错误：不是数组');
+                }
+                
+                brokers = data;
+                console.log(`成功加载${brokers.length}条券商数据`);
+                
+                // 设置登录状态检查和初始化
+                setupPasswordProtection();
+            } catch (error) {
+                console.error('加载券商数据失败:', error);
+                alert('加载数据失败: ' + error.message + '，请刷新页面重试');
+                
+                // 添加备用逻辑：如果加载失败，显示一个简单的提示
+                const passwordProtection = document.getElementById('password-protection');
+                const contentContainer = document.getElementById('content-container');
+                passwordProtection.style.display = 'none';
+                contentContainer.style.display = 'block';
+                contentContainer.innerHTML = '<div style="text-align: center; padding: 50px; color: red;">数据加载失败，请检查网络连接或刷新页面重试。</div>';
+            }
+        }
+        
+        // 页面加载完成后立即开始加载数据
+        document.addEventListener('DOMContentLoaded', loadBrokerData);
+ 
+        // 处理费率文本，拆分|并格式化
+        function formatFeeText(text) {
+            if (!text) return '-';
+            
+            // // 移除免五相关文本
+            // text = text.replace(/免五|免5|兔五|兔5/g, '');
+            
+            // 拆分|并格式化
+            if (text.includes('|')) {
+                const parts = text.split('|');
+                return `${parts[0].trim()}<span class="subtitle">${parts[1].trim()}</span>`;
+            }
+            
+            return text.trim();
+        }
+        // 处理费率文本，拆分|并格式化
+        function formatFeeText2sigle(text) {
+            if (!text) return '-';
+            
+            // // 移除免五相关文本
+            // text = text.replace(/免五|免5|兔五|兔5/g, '');
+            
+            // 拆分|并格式化
+            if (text.includes('|')) {
+                const parts = text.split('|');
+                return `${parts[0].trim()} (${parts[1].trim()})`;
+            }
+            
+            return text.trim();
+        }        
+        // 渲染软件支持HTML
+        function renderSoftwareSupport(software) {
+            if (!software || Object.keys(software).length === 0) {
+                return '-';
+            }
+            let result = '<div class="software-support">';
+            for (const [key, value] of Object.entries(software)) {
+                if (value && value.trim() !== '') {
+                    result += `<span class="software-badge">${key}${value}</span>`;
+                } else {
+                    result += `<span class="software-badge">${key}</span>`;
+                }
+            }
+            result += '</div>';
+            return result;
+        }
+        
+        // 获取当前时间
+        function getCurrentTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        }
+        
+        
+        // 通用的表格复制为图片函数
+        function copyTableToImage(tableElement, btn) {
+            const originalText = btn.textContent;
+            btn.textContent = '正在处理...';
+            btn.disabled = true;
+            
+            // 创建一个包装容器，用于添加边框和留白
+            const wrapper = document.createElement('div');
+            // 使用与原始表格相同的容器类名，以保持一致的样式
+            wrapper.className = tableElement.parentElement.className;
+            wrapper.style.position = 'absolute';
+            wrapper.style.left = '-9999px';
+            wrapper.style.top = '-9999px';
+            
+            // 克隆表格，保留原始样式
+            const tableClone = tableElement.cloneNode(true);
+            
+
+            tableClone.style.margin = '0';
+            tableClone.style.padding = '5px';
+            
+            wrapper.appendChild(tableClone);
+            
+            // 临时添加到文档中
+            document.body.appendChild(wrapper);
+            
+            // 强制重排以获取准确的尺寸
+            void wrapper.offsetHeight;
+            
+            html2canvas(wrapper, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+                // 移除手动设置的宽高，让html2canvas自动精确计算
+                windowBounds: { top: 0, left: 0, width: wrapper.offsetWidth, height: wrapper.offsetHeight },
+                removeContainer: true,
+                // 优化渲染，避免多余空白
+                allowTaint: true,
+                imageTimeout: 30000
+            }).then(canvas => {
+                canvas.toBlob((blob) => {
+                    const item = new ClipboardItem({
+                        'image/png': blob
+                    });
+                    
+                    navigator.clipboard.write([item]).then(() => {
+                        btn.textContent = '复制成功！';
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.disabled = false;
+                        }, 2000);
+                    }).catch(err => handleCopyError(err, btn, originalText));
+                });
+            }).catch(err => handleCopyError(err, btn, originalText));
+        }
+        
+        // 处理复制错误的辅助函数
+        function handleCopyError(err, btn, originalText) {
+            console.error('复制失败:', err);
+            btn.textContent = '复制失败';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 2000);
+        }
+        
+        // 复制表格为图片的公共接口
+        function copyTableAsImage(tableId, btnId) {
+            const btn = document.getElementById(btnId);
+            const tableElement = document.getElementById(tableId);
+            
+            btn.addEventListener('click', () => {
+                copyTableToImage(tableElement, btn);
+            });
+        }
+        
+        // 生成券商复选框
+        function generateBrokerCheckboxes() {
+            const container = document.getElementById('broker-checkboxes');
+            
+            brokers.forEach(broker => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `broker-${broker['券商代号']}`;
+                checkbox.checked = broker.visible;
+                
+                const label = document.createElement('label');
+                label.htmlFor = `broker-${broker['券商代号']}`;
+                label.innerHTML = `<input type="checkbox" id="broker-${broker['券商代号']}" ${broker.visible ? 'checked' : ''}> ${broker['券商代号']} ${broker['券商']}`;
+                
+                container.appendChild(label);
+                
+                // 添加事件监听
+                document.getElementById(`broker-${broker['券商代号']}`).addEventListener('change', updateTables);
+            });
+        }
+        
+        // 复制单个券商表格为图片
+        function setupCopyButtonsForSingleTables() {
+            const tables = document.querySelectorAll('.single-broker');
+            tables.forEach((table, index) => {
+                const btn = table.querySelector('.copy-image-btn');
+                const tableElement = table.querySelector('table');
+                tableElement.id = `single-table-${index}`;
+                
+                // 直接使用通用的复制函数
+                btn.addEventListener('click', () => {
+                    copyTableToImage(tableElement, btn);
+                });
+            });
+        }
+        
+        // 生成表1
+        function generateTable1() {
+            const tableBody = document.getElementById('table1-body');
+            tableBody.innerHTML = '';
+            
+            let counter = 1;
+            brokers.forEach(broker => {
+                if (shouldShowBroker(broker)) {
+                    const tr = document.createElement('tr');
+                    if (broker.recommend) {
+                        tr.classList.add('highlight');
+                    }
+                    
+                    tr.innerHTML = `
+                        <td class="broker-cell">
+                            <div>
+                                ${String(counter).padStart(2, '0')} ${broker['券商代号']}
+                                ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''}  
+                            </div>
+
+                            <span class="subtitle">${broker['推荐语']}</span>
+                        </td>
+                        <td style="text-align: center;">${broker['入金门槛'] || '-'}</td>
+                        <td>${formatFeeText(broker['股票'])}</td>
+                        <td style="text-align: center;">${broker['过户费'] || '-'}</td>
+                        <td>${formatFeeText(broker['ETF'])}</td>
+                        <td style="text-align: center;">${broker['逆回购'] || '-'}</td>
+                        <td>${formatFeeText(broker['可转债'])}</td>
+                        <td style="text-align: center;">${formatFeeText(broker['港股通']) || '-'}</td>
+                        <td style="text-align: center;">${formatFeeText(broker['北交所']) || '-'}</td>
+                        <td>${renderSoftwareSupport(broker['软件支持'])}</td>
+                    `;
+                    
+                    tableBody.appendChild(tr);
+                    counter++;
+                }
+            });
+        }
+        
+        // 生成表2
+        function generateTable2() {
+            const tableBody = document.getElementById('table2-body');
+            tableBody.innerHTML = '';
+            
+            let counter = 1;
+            brokers.forEach(broker => {
+                if (shouldShowBroker(broker)) {
+                    const tr = document.createElement('tr');
+                    if (broker.recommend) {
+                        tr.classList.add('highlight');
+                    }
+                    
+                    tr.innerHTML = `
+                        <td class="broker-cell">
+                            <div>
+                                ${String(counter).padStart(2, '0')} ${broker['券商代号']} ${broker['券商']}
+                                ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''}                                
+                            </div>
+                            <span class="subtitle">${broker['推荐语']}</span>
+                            </td>
+                        <td style="text-align: center;">${broker['入金门槛'] || '-'}</td>
+                        <td>${formatFeeText(broker['股票'])}</td>
+                        <td>${broker['过户费'] || '-'}</td>
+                        <td>${formatFeeText(broker['ETF'])}</td>
+                        <td style="text-align: center;">${broker['逆回购'] || '-'}</td>
+                        <td>${formatFeeText(broker['可转债'])}</td>
+                        <td style="text-align: center;">${formatFeeText(broker['港股通']) || '-'}</td>
+                        <td style="text-align: center;">${formatFeeText(broker['北交所']) || '-'}</td>
+                        <td>${renderSoftwareSupport(broker['软件支持'])}</td>
+                        <td style="font-size: 0.9em;color: #666;">${broker['永久费率要求'] ? formatFeeText(broker['永久费率要求']) : '-'}</td>
+                    `;
+                    
+                    tableBody.appendChild(tr);
+                    counter++;
+                }
+            });
+        }
+        
+        // 生成单个券商表格
+        function generateSingleBrokerTables() {
+            const container = document.getElementById('single-broker-tables');
+            container.innerHTML = '';
+            
+            brokers.forEach((broker, index) => {
+                if (shouldShowBroker(broker)) {
+                    const brokerDiv = document.createElement('div');
+                    brokerDiv.className = 'single-broker';
+                    
+                    // 处理特色、调佣流程等字段中的|符号
+                    const formatTextWithoutPipe = (text) => {
+                        if (!text) return '';
+                        return text.replace(/\|/g, '');
+                    };
+                    
+                    brokerDiv.innerHTML = `
+                        <h3> ${broker['券商代号']} ${broker['券商']} </h3>
+                        <button class="copy-image-btn">复制为图片</button>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">${broker['券商代号']} ${broker['券商']}  ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''} <span class="subtitle">${broker['推荐语']}</span></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr><th style="min-width: 100px;">入金门槛</th><td>${broker['入金门槛'] || '-'}</td></tr>
+                                    <tr><th>股票</th><td>${formatFeeText2sigle(broker['股票'])}</td></tr>
+                                    <tr><th>过户费</th><td>${broker['过户费'] || '-'}</td></tr>
+                                    <tr><th>ETF</th><td>${formatFeeText2sigle(broker['ETF'])}</td></tr>
+                                    <tr><th>逆回购</th><td>${broker['逆回购'] || '-'}</td></tr>
+                                    <tr><th>可转债</th><td>${formatFeeText2sigle(broker['可转债'])}</td></tr>
+                                    <tr><th>港股通</th><td>${formatFeeText2sigle(broker['港股通']) || '-'}</td></tr>    
+                                    <tr><th>北交所</th><td>${formatFeeText2sigle(broker['北交所']) || '-'}</td></tr>
+                                    ${broker['两融'] ? `<tr><th>两融</th><td>${broker['两融']}</td></tr>` : ''}
+                                    ${broker['期权'] ? `<tr><th>期权</th><td>${broker['期权']}</td></tr>` : ''}
+                                    <tr><th>软件支持</th><td>${renderSoftwareSupport(broker['软件支持'])}</td></tr>
+                                    <tr><th>永久费率要求</th><td>${formatFeeText2sigle(broker['永久费率要求'])}</td></tr>
+                                    ${broker['特色'] ? `<tr><th>特色</th><td>${formatTextWithoutPipe(broker['特色'])}</td></tr>` : ''}
+                                    ${broker['调佣流程'] ? `<tr><th>调佣流程</th><td>${formatTextWithoutPipe(broker['调佣流程'])}</td></tr>` : ''}
+                                    ${broker['注意事项'] ? `<tr><th>注意事项</th><td>${formatTextWithoutPipe(broker['注意事项'])}</td></tr>` : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    
+                    container.appendChild(brokerDiv);
+                }
+            });
+            
+            // 设置复制按钮功能
+            setupCopyButtonsForSingleTables();
+        }
+        
+        // 判断是否应该显示券商
+        function shouldShowBroker(broker) {
+            // 检查对应的复选框是否被选中
+            const checkbox = document.getElementById(`broker-${broker['券商代号']}`);
+            if (checkbox && !checkbox.checked) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 初始化页面
+        function init() {
+            generateBrokerCheckboxes();
+            generateTable1();
+            generateTable2();
+            generateSingleBrokerTables();
+            
+            // 设置表格1复制按钮
+            const btn1 = document.createElement('button');
+            btn1.className = 'copy-image-btn';
+            btn1.id = 'copyTable1Btn';
+            btn1.textContent = '复制为图片';
+            document.getElementById('table1').parentElement.insertBefore(btn1, document.getElementById('table1'));
+            copyTableAsImage('table1', 'copyTable1Btn');
+            
+            // 设置表格2复制按钮
+            const btn2 = document.createElement('button');
+            btn2.className = 'copy-image-btn';
+            btn2.id = 'copyTable2Btn';
+            btn2.textContent = '复制为图片';
+            document.getElementById('table2').parentElement.insertBefore(btn2, document.getElementById('table2'));
+            copyTableAsImage('table2', 'copyTable2Btn');
+        }
+        
+        // 密码验证
+        function setupPasswordProtection() {
+            const passwordForm = document.getElementById('password-form');
+            const passwordProtection = document.getElementById('password-protection');
+            const contentContainer = document.getElementById('content-container');
+            
+            // 检查cookie中是否有保存的登录状态
+            function checkLoginStatus() {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith('broker_list_logged_in=')) {
+                        const loggedInValue = cookie.substring('broker_list_logged_in='.length);
+                        if (loggedInValue === 'true') {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            // 设置登录状态cookie，有效期一个月
+            function setLoginCookie() {
+                const now = new Date();
+                now.setTime(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30天
+                const expires = 'expires=' + now.toUTCString();
+                document.cookie = 'broker_list_logged_in=true; ' + expires + '; path=/';
+            }
+            
+            // 初始检查登录状态
+            if (checkLoginStatus()) {
+                passwordProtection.style.display = 'none';
+                contentContainer.style.display = 'block';
+                // 初始化页面
+                init();
+                return;
+            }
+            
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = document.getElementById('password-input').value;
+                if (password === 'llbxz') {
+                    passwordProtection.style.display = 'none';
+                    contentContainer.style.display = 'block';
+                    setLoginCookie(); // 保存登录状态到cookie
+                    // 初始化页面
+                    init();
+                } else {
+                    alert('密码错误，请重试！');
+                    document.getElementById('password-input').value = '';
+                }
+            });
+        }
+        
+  
+        // 更新所有表格
+        function updateTables() {
+            // 确保数据已加载
+            if (brokers.length === 0) {
+                console.warn('数据尚未加载，无法更新表格');
+                return;
+            }
+            
+            generateTable1();
+            generateTable2();
+            generateSingleBrokerTables();
+        }
+        
+        // 初始化函数已在上方定义，此处移除重复定义
+        
+        // 密码保护已在loadBrokerData函数中初始化，移除重复的事件监听器
+        
+        // 添加滚动事件监听
+        window.addEventListener('scroll', updateActiveNav);
+    </script>
+</body>
+</html>
