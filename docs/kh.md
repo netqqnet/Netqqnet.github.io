@@ -15,7 +15,7 @@ layout: doc
 :::
 
 ## 有哪些券商？
-![券商](/kh/simple_list.png "券商列表")
+![券商](/kh/simple_list2.png "券商列表")
 ::: note
 没有满意的？问一问，说不定有隐藏款。
 :::
