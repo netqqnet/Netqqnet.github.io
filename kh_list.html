@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>券商费率列表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h2 {
+            font-size: 20px;
+            color: #34495e;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .broker-cell {
+            font-weight: 500;
+        }
+        
+        .recommend-tag {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+        }
+        
+        .software-support {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .software-badge {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            color: #666;
+            font-weight: normal;
+            margin-top: 2px;
+            display: block;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .checkbox-group label {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .single-broker {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .single-broker h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .fee-highlight {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .checkbox-group {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>券商费率表</h1>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="showAll" checked> 显示所有券商</label>
+            <label><input type="checkbox" id="showRecommended" checked> 只显示推荐券商</label>
+        </div>
+        
+        <h2>表1：主要费率对比</h2>
+        <div class="table-container">
+            <table id="table1">
+                <thead>
+                    <tr>
+                        <th>券商</th>
+                        <th>门槛</th>
+                        <th>股票</th>
+                        <th>过户费</th>
+                        <th>ETF</th>
+                        <th>逆回购</th>
+                        <th>可转债</th>
+                        <th>港股通</th>
+                        <th>北交所</th>
+                        <th>软件支持</th>
+                    </tr>
+                </thead>
+                <tbody id="table1-body">
+                    <!-- 表格数据将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <h2>表2：详细费率信息</h2>
+        <div class="table-container">
+            <table id="table2">
+                <thead>
+                    <tr>
+                        <th>券商</th>
+                        <th>门槛</th>
+                        <th>股票</th>
+                        <th>过户费</th>
+                        <th>ETF</th>
+                        <th>逆回购</th>
+                        <th>可转债</th>
+                        <th>港股通</th>
+                        <th>北交所</th>
+                        <th>软件支持</th>
+                        <th>永久费率要求</th>
+                    </tr>
+                </thead>
+                <tbody id="table2-body">
+                    <!-- 表格数据将通过JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <h2>各券商详细信息</h2>
+        <div id="single-broker-tables">
+            <!-- 单个券商表格将通过JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <script>
+        // 券商数据
+        const brokers = [
+            {
+                "券商代号": "CC",
+                "券商": "川财",
+                "推荐语": "国企",
+                "入金门槛": "5万",
+                "股票": "万0.9 | 免五0.01元起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5 | 免五0.5起收",
+                "逆回购": "1折",
+                "可转债": "沪万0.44深万0.8 | 免五0.5起收",
+                "港股通": "万2",
+                "北交所": "万3",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "5w保持2个月，且股票或权益类ETF 累计交易5w",
+                "是否高端": false,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "YC",
+                "券商": "第一创业",
+                "推荐语": "上市券商 北京国资委控股",
+                "入金门槛": "2万",
+                "股票": "万0.854 | 免五0.1元起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.6 | 免五0.1元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0.1元起收",
+                "港股通": "万1",
+                "北交所": "万2",
+                "期权": "2.6元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金2万并保持2个月,且至少一次股票或权益类ETF交易",
+                "特色": "上市券商、北京国资委控股",
+                "是否高端": false,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "KA",
+                "券商": "开源",
+                "推荐语": "国企",
+                "入金门槛": "2万",
+                "股票": "万0.854 | 免五0.1元起收",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.6 | 免五0.2元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五1元起收",
+                "港股通": "万2",
+                "北交所": "万3",
+                "软件支持": {
+                    "同花顺": "(手机)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金2W并保持到次月底",
+                "是否高端": false,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "JH",
+                "券商": "江海",
+                "推荐语": "miniqmt 云条件单",
+                "入金门槛": "1.5万",
+                "股票": "万0.854兔5 | 1元起收",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.5兔五 | 0.1元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5兔5 | 0.1元起收",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(仅电脑)"
+                },
+                "永久费率要求": "入金1.5w保持1个月，且至少一次股票或权益类ETF交易",
+                "是否高端": false,
+                "visible": false,
+                "recommend": true
+            },
+            {
+                "券商代号": "YH2",
+                "券商": "银河",
+                "推荐语": "头部券商,适合ETF玩家拖拉机",
+                "入金门槛": "2万",
+                "股票": "万0.86 | 不免五",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.5 | 免五0.1元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0.1元起收",
+                "港股通": "万1",
+                "北交所": "万2",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)",
+                    "雪球": ""
+                },
+                "永久费率要求": "历史首开，入金2万并保持2个月，且有一次股票或者权益类ETF交易。达标后自动转永久低佣!! ",
+                "是否高端": false,
+                "visible": true,
+                "recommend": true
+            },
+            {
+                "券商代号": "CH",
+                "券商": "长城",
+                "推荐语": "国企 上市",
+                "入金门槛": "1.5万",
+                "股票": "万0.854 | 免五0.1元起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5 | 免五0.1元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0.1元起收",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金1.5W保持3个月，且股票累计交易1w",
+                "是否高端": false,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "D*",
+                "券商": "东北",
+                "推荐语": "上市 miniQMT",
+                "入金门槛": "20万",
+                "股票": "万0.741 | 免五0.1元起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.6 | 免五0.1元起收",
+                "逆回购": "不打折",
+                "可转债": "万1 | 沪1元起，深0",
+                "港股通": "万1",
+                "北交所": "万2",
+                "两融": "50w4.1%",
+                "期权": "2元/张（开通权限后单独调）",
+                "软件支持": {
+                    "同花顺": "(手机端+电脑端)",
+                    "通达信": "(电脑端)"
+                },
+                "永久费率要求": "①入金20并保持2个月 ②至少一次股票交易",
+                "特色": "10万开通QMT/miniQMT，量化费率和普通交易一致",
+                "调佣流程": "入金后，2个工作日左右调好；例：周一入金，周三可试佣金；",
+                "是否高端": false,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "H*",
+                "券商": "华宝",
+                "推荐语": "条件单 拖拉机 投顾强 ",
+                "入金门槛": "2万",
+                "股票": "万0.854|免五1元起",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.6|免五0.2元起",
+                "逆回购": "不打折",
+                "可转债": "沪万0.44深万0.8 | 免五0.5元起",
+                "港股通": "万3",
+                "北交所": "万4",
+                "新三板": "万6",
+                "老三板": "万6",
+                "期权": "2元/张",
+                "两融": "4.50%",
+                "软件支持": {
+                    "同花顺": "(手机)",
+                    "通达信": "(手机+PC)"
+                },
+                "永久费率要求": "入金2w保持3个月，且股票或权益类ETF累计交易2000元",
+                "特色": "调佣门槛低，调佣快、支持平台多，送投顾产品和研报体验，尊享智能交易条件单（200条），网格策略机器人",
+                "调佣流程": "开户成功后两个交易日内联系客户经理调佣，点击'业务办理一佣金确认'确认佣金",
+                "是否高端": false,
+                "visible": true,
+                "recommend": true
+            },
+            {
+                "券商代号": "GR",
+                "券商": "国融",
+                "推荐语": "国字头券商",
+                "入金门槛": "2万",
+                "股票": "万0.854|免五0.1起",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.6|免五0.1元起",
+                "逆回购": "一折",
+                "可转债": "万0.5    免0.1起",
+                "港股通": "万6",
+                "北交所": "万6",
+                "期权": "2.5元/张",
+                "两融": "5.8%",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金2万并保持3个月，且1个月内股票或股票型ETF流水1万以上",
+                "特色": "送投顾！调佣快！",
+                "调佣流程": "账户下来先免费签约精选投顾0元服务费体验1个月，然后入金2万以上并联系企业微信经理申请调佣，接到回访电话确定，2天左右调好",
+                "是否高端": false,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "GD",
+                "券商": "光大",
+                "推荐语": "顶级大券商，汇金控股",
+                "入金门槛": "1.5万",
+                "股票": "万一|免五免0.1元起",
+                "过户费": "沪深万0.1",
+                "ETF": "万一|免五免0.1元起",
+                "逆回购": "不打折",
+                "可转债": "万一|免五免0.1元起",
+                "港股通": "万3",
+                "北交所": "万4",
+                "两融": "5.2%",
+                "软件支持": {
+                    "同花顺": "(手机)",
+                    "通达信": "(电脑)"
+                },
+                "永久费率要求": "入金1.5万并保持3个月，且交易1万以上的股票流水",
+                "特色": "近千亿市值上市央企大券商，最终控制方是中央汇金",
+                "调佣流程": "开好入金1.5万之后，2个工作日后自动调好",
+                "是否高端": false,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "CJ1",
+                "券商": "长江",
+                "推荐语": "国企上市",
+                "入金门槛": "3万",
+                "股票": "万1 | 免五0.15起",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.7 | 免五0.15起",
+                "可转债": "万0.5 | 免五0.15起",
+                "逆回购": "一折",
+                "港股通": "万3",
+                "北交所": "万6",
+                "老三板": "万8",
+                "两融": "5.5%(可谈)",
+                "期权": "3元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "不支持"
+                },
+                "永久费率要求": "入金3万并保持三个月，且交易量需股票或权益类ETF1万以上",
+                "特色": "调佣快、理财收益高、条件单、送L2",
+                "调佣流程": "入金三万之后联系客户经理调佣，然后需要确定佣金，确定之后，3天调整好佣金",
+                "是否高端": false,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "GX",
+                "券商": "国信",
+                "推荐语": "TOP10 QMT 两融",
+                "入金门槛": "100万",
+                "股票": "万0.7 | 免五0起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.7| 免五0起收",
+                "逆回购": "1折",
+                "可转债": "万0.7| 免五0起收",
+                "港股通": "万1|0起收",
+                "北交所": "万2|0起收",
+                "两融": "50w4.1%,100w3.8%",
+                "期权": "1.7 元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)",
+                    "腾讯自选股": "",
+                    "雪球": ""
+                },
+                "永久费率要求": "100万并保持2个月，累计股票、权益类ETF交易额达15W，满足后自动转永久低佣！",
+                "特色": "1.50wQMT，100W Ptrade，可放云，便捷登录功能；速度高于普通30倍，支持多品种，L2行情，快速交易通道(百微秒)；极速柜台(十微秒)、夜间理财、网格交易、全自动云条件单；|2.新客理财6.XX%",
+                "调佣流程": "入金后，3个工作日左右调好；例：周一入金，周四可试佣金；",
+                "是否高端": true,
+                "visible": false,
+                "recommend": false
+            },
+            {
+                "券商代号": "YH1",
+                "券商": "银河",
+                "推荐语": "两融优势",
+                "入金门槛": "50万",
+                "股票": "万0.8 |不免五 ",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.5 | 免五0.5元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0.5元起收",
+                "港股通": "万1",
+                "北交所": "万2",
+                "两融": "50w4%,100w3.6%,可谈",
+                "期权": "2元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)",
+                    "雪球": ""
+                },
+                "永久费率要求": "入金50万并保持2个月，且交易10000以上股票或者权益类ETF。",
+                "特色": "1.融券资源丰富；|2. 送QMT和Ptrade",
+                "是否高端": true,
+                "visible": true,
+                "recommend": true
+            },
+            {
+                "券商代号": "SW",
+                "券商": "申万",
+                "推荐语": "miniQMT 上市",
+                "入金门槛": "50万",
+                "股票": "万0.854 | 0.01起，量化0.5起",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5 | 免五0.1元起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0起收",
+                "港股通": "万1",
+                "北交所": "万2 |免五0.01元起",
+                "两融": "5.50%",
+                "期权": "2元/张",
+                "软件支持": {
+                    "同花顺": "（电脑）",
+                    "通达信": "(电脑)"
+                },
+                "永久费率要求": "入金50万并保持2个月，累计股票、权益类ETF交易额达2W，满足后自动转永久低佣！",
+                "特色": "50w开通qmt/miniqmt",
+                "是否高端": true,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "CJ2",
+                "券商": "长江",
+                "推荐语": "国企上市",
+                "入金门槛": "50万",
+                "股票": "万0.854 | 免五0.01元起收",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.6 | 0.01元起收",
+                "逆回购": "1折",
+                "可转债": "万0.75 | 免五0.01元起收",
+                "港股通": "万1.2",
+                "北交所": "万2.25",
+                "两融": "50w4.3%",
+                "期权": "2元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(仅电脑)"
+                },
+                "永久费率要求": "入金50万并保持3个月以上，且交易10000以上股票或者权益类ETF",
+                "特色": "1.新客理财200+|2.100w ptrade",
+                "是否高端": true,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "GT",
+                "券商": "国泰",
+                "推荐语": "头部上市",
+                "入金门槛": "50万",
+                "股票": "万0.8/0.7 | 免五0.01元起收",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5 | 免五0起收",
+                "逆回购": "1折",
+                "可转债": "沪万0.5深万2 | 免五0起收",
+                "港股通": "万1",
+                "北交所": "万2",
+                "两融": "50w4%,100w3.7%",
+                "期权": "1.7元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金50万并保持2个月，且至少一次股票型交易；满足后自动转永久低佣！",
+                "特色": "50万开通qmt、ptrade",
+                "是否高端": true,
+                "visible": true,
+                "recommend": true
+            },
+            {
+                "券商代号": "PA",
+                "券商": "平安",
+                "推荐语": "24小时转账 两融",
+                "入金门槛": "50万",
+                "股票": "万0.8 | 不免五",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5",
+                "逆回购": "1折",
+                "可转债": "万0.5",
+                "港股通": "万1",
+                "北交所": "万2",
+                "两融": "3.5%",
+                "软件支持": {
+                    "同花顺": "",
+                    "通达信": ""
+                },
+                "永久费率要求": "",
+                "特色": "",
+                "调佣流程": "",
+                "是否高端": true,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "GJ",
+                "券商": "国金",
+                "推荐语": "国企上市",
+                "入金门槛": "30万",
+                "股票": "万0.854|不免五",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.5 | 免五0.5元起",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 免五0.1元起",
+                "港股通": "万0.854",
+                "北交所": "万3",
+                "两融": "5%起",
+                "期权": "2元/张",
+                "软件支持": {
+                    "同花顺": "(手机+电脑) 云条件单",
+                    "通达信": "(手机+电脑)",
+                    "雪球": "",
+                    "腾讯自选股": "",
+                    "大智慧": ""
+                },
+                "永久费率要求": "入金30万并保持2个月，且至少一次股票型交易；满足后自动转永久低佣！",
+                "特色": "1.线上直开两融；|2. 50w送独立高度通道；|3. 支持miniqmt/QMT/ptrade",
+                "是否高端": true,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "H*",
+                "券商": "华西",
+                "推荐语": "西部龙头",
+                "入金门槛": "20万",
+                "股票": "万0.85 | 免五0.1元起收",
+                "过户费": "沪0.1/深免",
+                "ETF": "万0.5| 免五0.1起收",
+                "逆回购": "1折",
+                "可转债": "万0.5 | 沪1元起，深0",
+                "港股通": "万0.854 | 0.1起收",
+                "北交所": "万2",
+                "两融": "50万两融5%，100万4.5%，资金量大可协商",
+                "软件支持": {
+                    "同花顺": "(手机版)",
+                    "通达信": "(电脑版)"
+                },
+                "永久费率要求": "入金20万并保持3个月；期限有一次持仓8成且不小于20w",
+                "特色": "限时优惠：20万以上也可以调0.854免五",
+                "注意事项": "云南身份证和山东身份证不能调佣！开户手机号在同花顺或其他地方点击过开户流程的不能调佣！需要沪深双开！",
+                "调佣流程": "入金后，2-3个交易日调好；调佣时跟员工经理主动说一声\"调佣\"，不能发费率图和免五字眼",
+                "是否高端": false,
+                "visible": true,
+                "recommend": false
+            },
+            {
+                "券商代号": "GF",
+                "券商": "广发",
+                "推荐语": "两融北交所港股通",
+                "入金门槛": "50万",
+                "股票": "万0.641",
+                "过户费": "沪深万0.1",
+                "ETF": "万0.5",
+                "可转债": "万0.5",
+                "港股通": "净佣万0.1",
+                "北交所": "万1.4",
+                "软件支持": {
+                    "同花顺": "(手机+电脑)",
+                    "通达信": "(手机+电脑)"
+                },
+                "永久费率要求": "入金50万并保持2个月以上，且有一次股票或者权益类ETF交易",
+                "是否高端": true,
+                "visible": true,
+                "recommend": true
+            }
+        ];
+        
+        // 渲染软件支持HTML
+        function renderSoftwareSupport(software) {
+            if (!software || Object.keys(software).length === 0) {
+                return '-';
+            }
+            let result = '<div class="software-support">';
+            for (const [key, value] of Object.entries(software)) {
+                if (value && value.trim() !== '') {
+                    result += `<span class="software-badge">${key}${value}</span>`;
+                } else {
+                    result += `<span class="software-badge">${key}</span>`;
+                }
+            }
+            result += '</div>';
+            return result;
+        }
+        
+        // 检查是否免五
+        function hasMianWu(text) {
+            return text && (text.includes('免五') || text.includes('免5') || text.includes('兔五') || text.includes('兔5'));
+        }
+        
+        // 生成表1
+        function generateTable1() {
+            const tableBody = document.getElementById('table1-body');
+            tableBody.innerHTML = '';
+            
+            let counter = 1;
+            brokers.forEach(broker => {
+                if (shouldShowBroker(broker)) {
+                    const tr = document.createElement('tr');
+                    if (broker.recommend) {
+                        tr.classList.add('highlight');
+                    }
+                    
+                    tr.innerHTML = `
+                        <td class="broker-cell">
+                            ${counter} ${broker['券商代号']}
+                            <span class="subtitle">${broker['推荐语']}</span>
+                            ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''}
+                        </td>
+                        <td>${broker['入金门槛'] || '-'}</td>
+                        <td>
+                            ${broker['股票'] || '-'} 
+                            ${hasMianWu(broker['股票']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['过户费'] || '-'}</td>
+                        <td>
+                            ${broker['ETF'] || '-'} 
+                            ${hasMianWu(broker['ETF']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['逆回购'] || '-'}</td>
+                        <td>
+                            ${broker['可转债'] || '-'} 
+                            ${hasMianWu(broker['可转债']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['港股通'] || '-'}</td>
+                        <td>${broker['北交所'] || '-'}</td>
+                        <td>${renderSoftwareSupport(broker['软件支持'])}</td>
+                    `;
+                    
+                    tableBody.appendChild(tr);
+                    counter++;
+                }
+            });
+        }
+        
+        // 生成表2
+        function generateTable2() {
+            const tableBody = document.getElementById('table2-body');
+            tableBody.innerHTML = '';
+            
+            let counter = 1;
+            brokers.forEach(broker => {
+                if (shouldShowBroker(broker)) {
+                    const tr = document.createElement('tr');
+                    if (broker.recommend) {
+                        tr.classList.add('highlight');
+                    }
+                    
+                    tr.innerHTML = `
+                        <td class="broker-cell">
+                            ${counter} ${broker['券商代号']} ${broker['券商']}
+                            <span class="subtitle">${broker['推荐语']}</span>
+                            ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''}
+                        </td>
+                        <td>${broker['入金门槛'] || '-'}</td>
+                        <td>
+                            ${broker['股票'] || '-'} 
+                            ${hasMianWu(broker['股票']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['过户费'] || '-'}</td>
+                        <td>
+                            ${broker['ETF'] || '-'} 
+                            ${hasMianWu(broker['ETF']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['逆回购'] || '-'}</td>
+                        <td>
+                            ${broker['可转债'] || '-'} 
+                            ${hasMianWu(broker['可转债']) ? '<span class="fee-highlight">[免五]</span>' : ''}
+                        </td>
+                        <td>${broker['港股通'] || '-'}</td>
+                        <td>${broker['北交所'] || '-'}</td>
+                        <td>${renderSoftwareSupport(broker['软件支持'])}</td>
+                        <td>${broker['永久费率要求'] || '-'}</td>
+                    `;
+                    
+                    tableBody.appendChild(tr);
+                    counter++;
+                }
+            });
+        }
+        
+        // 生成单个券商表格
+        function generateSingleBrokerTables() {
+            const container = document.getElementById('single-broker-tables');
+            container.innerHTML = '';
+            
+            brokers.forEach((broker, index) => {
+                if (shouldShowBroker(broker)) {
+                    const brokerDiv = document.createElement('div');
+                    brokerDiv.className = 'single-broker';
+                    
+                    brokerDiv.innerHTML = `
+                        <h3>${index + 1}. ${broker['券商代号']} ${broker['券商']} - ${broker['推荐语']} ${broker.recommend ? '<span class="recommend-tag">推荐</span>' : ''}</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>项目</th>
+                                        <th>费率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>入金门槛</td><td>${broker['入金门槛'] || '-'}</td></tr>
+                                    <tr><td>股票</td><td>${broker['股票'] || '-'} ${hasMianWu(broker['股票']) ? '<span class="fee-highlight">[免五]</span>' : ''}</td></tr>
+                                    <tr><td>过户费</td><td>${broker['过户费'] || '-'}</td></tr>
+                                    <tr><td>ETF</td><td>${broker['ETF'] || '-'} ${hasMianWu(broker['ETF']) ? '<span class="fee-highlight">[免五]</span>' : ''}</td></tr>
+                                    <tr><td>逆回购</td><td>${broker['逆回购'] || '-'}</td></tr>
+                                    <tr><td>可转债</td><td>${broker['可转债'] || '-'} ${hasMianWu(broker['可转债']) ? '<span class="fee-highlight">[免五]</span>' : ''}</td></tr>
+                                    <tr><td>港股通</td><td>${broker['港股通'] || '-'}</td></tr>
+                                    <tr><td>北交所</td><td>${broker['北交所'] || '-'}</td></tr>
+                                    ${broker['两融'] ? `<tr><td>两融</td><td>${broker['两融']}</td></tr>` : ''}
+                                    ${broker['期权'] ? `<tr><td>期权</td><td>${broker['期权']}</td></tr>` : ''}
+                                    <tr><td>软件支持</td><td>${renderSoftwareSupport(broker['软件支持'])}</td></tr>
+                                    <tr><td>永久费率要求</td><td>${broker['永久费率要求'] || '-'}</td></tr>
+                                    ${broker['特色'] ? `<tr><td>特色</td><td>${broker['特色']}</td></tr>` : ''}
+                                    ${broker['调佣流程'] ? `<tr><td>调佣流程</td><td>${broker['调佣流程']}</td></tr>` : ''}
+                                    ${broker['注意事项'] ? `<tr><td>注意事项</td><td>${broker['注意事项']}</td></tr>` : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    
+                    container.appendChild(brokerDiv);
+                }
+            });
+        }
+        
+        // 判断是否应该显示券商
+        function shouldShowBroker(broker) {
+            const showAll = document.getElementById('showAll').checked;
+            const showRecommended = document.getElementById('showRecommended').checked;
+            
+            if (!broker.visible) {
+                return false;
+            }
+            
+            if (showRecommended && !broker.recommend) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // 初始化页面
+        function init() {
+            generateTable1();
+            generateTable2();
+            generateSingleBrokerTables();
+            
+            // 添加事件监听
+            document.getElementById('showAll').addEventListener('change', function() {
+                document.getElementById('showRecommended').checked = !this.checked;
+                updateTables();
+            });
+            
+            document.getElementById('showRecommended').addEventListener('change', function() {
+                document.getElementById('showAll').checked = !this.checked;
+                updateTables();
+            });
+        }
+        
+        // 更新所有表格
+        function updateTables() {
+            generateTable1();
+            generateTable2();
+            generateSingleBrokerTables();
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
