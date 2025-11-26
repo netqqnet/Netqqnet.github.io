@@ -33,7 +33,7 @@ layout: doc
 
 ## 如何联系？
 
-<img src="/qrcode/qiwei2_pp.png"  width="200" />
+<img src="/qrcode/xinyuqw.png"  width="200" />
 
 或者钉钉搜 m5khcom
 (请备注来意)
