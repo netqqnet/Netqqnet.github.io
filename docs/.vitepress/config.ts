@@ -124,7 +124,8 @@ export default defineConfig({
       provider: 'local'
     },
     socialLinks: [
-      { icon: 'twitter', link: 'https://x.com/Ericlin668' }
+      { icon: 'twitter', link: 'https://x.com/Ericlin668' },
+      { icon: 'telegram', link: 'https://t.me/laojuelv' },
     ],
   },
   markdown: {
