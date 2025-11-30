@@ -3,27 +3,21 @@ import Teek from "vitepress-theme-teek";
 import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
 import { useRouter } from "vitepress";
-import { trackPageview } from "vitepress-theme-teek";
-import { onMounted, watch } from "vue";
+import { watch } from "vue";
 import { isClient } from "vitepress-theme-teek";
 
 // 获取 VitePress 路由
 const router = useRouter();
 
-// 监听路由变化，调用百度统计的trackPageview函数
+// 监听路由变化，调用百度统计的_trackPageview方法
+// 百度统计脚本已通过配置文件自动加载，这里只需要监听路由变化
 watch(
   () => router.route.path,
   (newPath) => {
-    // 只在客户端运行时才调用trackPageview函数
-    if (isClient) {
-      // 从配置中获取百度统计ID
-      const baiduId = "dc047fc743d8342d826086208bb74ab2";
-      
-      // 调用trackPageview函数，确保每次路由变化都能正确记录
-      trackPageview(
-        { id: baiduId, production: false },
-        window.location.href
-      );
+    if (isClient && window._hmt) {
+      // 直接调用百度统计的原生_trackPageview方法
+      // 不重复设置账户ID，避免冲突
+      window._hmt.push(["_trackPageview"]);
     }
   },
   { immediate: true } // 立即执行一次
