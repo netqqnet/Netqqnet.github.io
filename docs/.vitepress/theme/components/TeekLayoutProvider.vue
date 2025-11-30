@@ -10,7 +10,7 @@ import { isClient } from "vitepress-theme-teek";
 const router = useRouter();
 
 // 监听路由变化，调用百度统计的_trackPageview方法
-// 百度统计脚本已通过配置文件直接插入到head中
+// 百度统计脚本已通过主题的siteAnalytics配置自动加载
 watch(
   () => router.route.path,
   (newPath) => {
