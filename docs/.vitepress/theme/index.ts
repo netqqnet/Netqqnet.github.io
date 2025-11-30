@@ -1,5 +1,7 @@
 import Teek from "vitepress-theme-teek";
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
+import BrokerTable from "./components/BrokerTable.vue";
+import Qrcode from "./components/Qrcode.vue";
 
 // Teek 本地主题包引用（与 Teek 在线主题包引用 二选一）
 // 当前引入文件为 scss，需要执行 pnpm add sass，如果不想安装额外依赖，可以直接引入 Teek 已经构建好的 css 文件，请看 https://vp.teek.top/styles-plus.html
@@ -38,4 +40,8 @@ import "./styles/iframe.scss";
 export default {
   extends: Teek,
   Layout: TeekLayoutProvider,
+  enhanceApp({ app }) {
+    app.component('BrokerTable', BrokerTable);
+    app.component('Qrcode', Qrcode);
+  }
 };
