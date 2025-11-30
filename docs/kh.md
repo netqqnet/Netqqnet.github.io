@@ -33,10 +33,11 @@ layout: doc
 
 
 ## 如何联系？
-
+1. Wechat:
 <Qrcode />
 
-或者钉钉搜 m5khcom
+2. Dingtalk: m5khcom
+
 (请备注来意)
 
 ## 常见问题FAQ
