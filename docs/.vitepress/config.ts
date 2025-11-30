@@ -54,15 +54,15 @@ const teekConfig = defineTeekConfig({
         name: "蜀ICP备2025135343号",
         link: "http://beian.miit.gov.cn/",
       },
+      //站点统计配置
+      siteAnalytics:
+        {
+          provider: "google",
+          options: {
+            id: "",
+          },
+        },
     },
-    siteAnalytics: [
-    {
-      provider: "baidu",
-      options: {
-        id: "dc047fc743d8342d826086208bb74ab2",
-      },
-    },
-  ],   
 });
 const description = ["不仅仅是万一免五，持续更新的投资学习站,聚合多家优质券商，帮你寻找最优的交易费率"].toString();
 
@@ -100,6 +100,18 @@ export default defineConfig({
     //   },
     // ],
     ["meta", { name: "keywords", description }],
+    // 百度统计官方代码
+    [
+      "script",
+      {},
+      `var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?dc047fc743d8342d826086208bb74ab2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();`
+    ],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

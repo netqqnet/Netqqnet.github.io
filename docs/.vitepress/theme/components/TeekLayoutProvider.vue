@@ -10,13 +10,13 @@ import { isClient } from "vitepress-theme-teek";
 const router = useRouter();
 
 // 监听路由变化，调用百度统计的_trackPageview方法
-// 百度统计脚本已通过配置文件自动加载，这里只需要监听路由变化
+// 百度统计脚本已通过配置文件直接插入到head中
 watch(
   () => router.route.path,
   (newPath) => {
     if (isClient && window._hmt) {
-      // 直接调用百度统计的原生_trackPageview方法
-      // 不重复设置账户ID，避免冲突
+      // 直接调用百度统计的原生_trackPageview方法，不传递任何参数
+      // 让百度统计自己处理当前页面的URL和来源信息
       window._hmt.push(["_trackPageview"]);
     }
   },
