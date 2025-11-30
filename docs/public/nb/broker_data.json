@@ -39,8 +39,8 @@
         },
         "永久费率要求": "入金1.5万，保持3个月",
         "是否高端": false,
-        "visible": true,
-        "recommend": true
+        "visible": false,
+        "recommend": false
     },
     {
     "券商代号": "YC",
