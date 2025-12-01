@@ -65,7 +65,7 @@ const teekConfig = defineTeekConfig({
     {
       provider: "google",
       options: {
-        id: "GTM-5DR52V",
+        id: "G-HNLW1TZV86",
       },
     },
   ],
