@@ -53,7 +53,7 @@ features:
 /* 彩虹动画 */
 :root {
   animation: rainbow 12s linear infinite;
-};
+}
 
 @media (min-width: 640px) {
   :root {
