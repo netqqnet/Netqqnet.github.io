@@ -6,33 +6,33 @@ import { useRouter } from "vitepress";
 import { watch } from "vue";
 import { isClient } from "vitepress-theme-teek";
 
-// 获取 VitePress 路由
-const router = useRouter();
+// // 获取 VitePress 路由
+// const router = useRouter();
 
-// 监听路由变化，调用百度统计和Google统计的页面跟踪方法
-watch(
-  () => router.route.path,
-  (newPath) => {
-    // 百度统计
-    if (isClient && window._hmt) {
-      // 直接调用百度统计的原生_trackPageview方法，不传递任何参数
-      // 让百度统计自己处理当前页面的URL和来源信息
-      // 这样可以保留完整的来源信息
-      window._hmt.push(["_trackPageview"]);
-    }
+// // 监听路由变化，调用百度统计和Google统计的页面跟踪方法
+// watch(
+//   () => router.route.path,
+//   (newPath) => {
+//     // 百度统计
+//     if (isClient && window._hmt) {
+//       // 直接调用百度统计的原生_trackPageview方法，不传递任何参数
+//       // 让百度统计自己处理当前页面的URL和来源信息
+//       // 这样可以保留完整的来源信息
+//       window._hmt.push(["_trackPageview"]);
+//     }
     
-    // Google统计
-    if (isClient && window.gtag) {
-      // 调用Google统计的页面浏览事件
-      // 对于Google Analytics 4，使用page_view事件
-      // 对于Universal Analytics，使用config命令
-      window.gtag("event", "page_view", {
-        page_path: newPath
-      });
-    }
-  },
-  { immediate: true } // 立即执行一次
-);
+//     // Google统计
+//     if (isClient && window.gtag) {
+//       // 调用Google统计的页面浏览事件
+//       // 对于Google Analytics 4，使用page_view事件
+//       // 对于Universal Analytics，使用config命令
+//       window.gtag("event", "page_view", {
+//         page_path: newPath
+//       });
+//     }
+//   },
+//   { immediate: true } // 立即执行一次
+// );
 </script>
 
 <template>
