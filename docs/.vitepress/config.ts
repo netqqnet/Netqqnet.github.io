@@ -54,15 +54,21 @@ const teekConfig = defineTeekConfig({
         name: "蜀ICP备2025135343号",
         link: "http://beian.miit.gov.cn/",
       },
-      siteAnalytics: [
-      {
-        provider: "baidu",
-        options: {
-          id: "dc047fc743d8342d826086208bb74ab2",
-        },
-      },
-    ],
     },
+    siteAnalytics: [
+    {
+      provider: "baidu",
+      options: {
+        id: "dc047fc743d8342d826086208bb74ab2",
+      },
+    },
+    {
+      provider: "google",
+      options: {
+        id: "GTM-5DR52V",
+      },
+    },
+  ],
 });
 const description = ["不仅仅是万一免五，持续更新的投资学习站,聚合多家优质券商，帮你寻找最优的交易费率"].toString();
 
