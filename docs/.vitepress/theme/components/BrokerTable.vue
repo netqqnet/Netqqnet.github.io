@@ -112,24 +112,25 @@ const renderSoftwareSupport = (software: Record<string, string> | undefined) => 
   margin: 20px 0;
   font-size: 13px;
   text-align: left;
-  color: #333;
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-bg);
 }
 
 .broker-table th,
 .broker-table td {
   padding: 10px 7px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--vp-c-divider);
   vertical-align: top;
 }
 
 .broker-table th {
-  background-color: #f8f9fa;
+  background-color: var(--vp-c-bg-alt);
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--vp-c-text-1);
 }
 
 .broker-table tr:hover {
-  background-color: #f8f9fa;
+  background-color: var(--vp-c-bg-soft);
 }
 
 /* 券商单元格样式 */
@@ -159,7 +160,7 @@ const renderSoftwareSupport = (software: Record<string, string> | undefined) => 
 
 /* 高亮行样式 */
 .highlight {
-  background-color: #fff3cd;
+  background-color: var(--vp-c-warning-soft);
 }
 
 /* 软件支持样式 */
@@ -171,8 +172,8 @@ const renderSoftwareSupport = (software: Record<string, string> | undefined) => 
 }
 
 .broker-table :deep(.software-badge) {
-  background-color: #f3f8fc;
-  color: #77899b;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
   padding: 2px 3px;
   border-radius: 4px;
   font-size: .8em;
@@ -182,7 +183,7 @@ const renderSoftwareSupport = (software: Record<string, string> | undefined) => 
 .subtitle,
 .broker-table :deep(.subtitle) {
   font-size: 0.85em;
-  color: #666;
+  color: var(--vp-c-text-2);
   font-weight: normal;
   margin-top: 2px;
   display: block;
