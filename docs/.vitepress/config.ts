@@ -113,6 +113,18 @@ export default defineConfig({
     //   },
     // ],
     ["meta", { name: "keywords", description }],
+    // 百度统计官方代码，直接添加到head中
+    [
+      "script",
+      {},
+      `var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?dc047fc743d8342d826086208bb74ab2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();`
+    ],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
