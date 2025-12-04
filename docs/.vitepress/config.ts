@@ -57,17 +57,11 @@ const teekConfig = defineTeekConfig({
     },
     siteAnalytics: [
     // {
-    //   provider: "baidu",
+    //   provider: "google",
     //   options: {
-    //     id: "dc047fc743d8342d826086208bb74ab2",
+    //     id: "G-HNLW1TZV86",
     //   },
     // },
-    {
-      provider: "google",
-      options: {
-        id: "G-HNLW1TZV86",
-      },
-    },
     {
       provider: "umami",
       options: {
