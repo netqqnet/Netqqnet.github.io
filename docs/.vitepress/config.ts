@@ -56,16 +56,23 @@ const teekConfig = defineTeekConfig({
       },
     },
     siteAnalytics: [
-    {
-      provider: "baidu",
-      options: {
-        id: "dc047fc743d8342d826086208bb74ab2",
-      },
-    },
+    // {
+    //   provider: "baidu",
+    //   options: {
+    //     id: "dc047fc743d8342d826086208bb74ab2",
+    //   },
+    // },
     {
       provider: "google",
       options: {
         id: "G-HNLW1TZV86",
+      },
+    },
+    {
+      provider: "umami",
+      options: {
+        id: "399104e8-a096-4d90-aa8e-c0d4d44589f3",
+        src: "https://cloud.umami.is/script.js",
       },
     },
   ],
