@@ -56,12 +56,6 @@ const teekConfig = defineTeekConfig({
       },
     },
     siteAnalytics: [
-    // {
-    //   provider: "google",
-    //   options: {
-    //     id: "G-HNLW1TZV86",
-    //   },
-    // },
     {
       provider: "umami",
       options: {
@@ -112,12 +106,12 @@ export default defineConfig({
       "script",
       {},
       `var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?dc047fc743d8342d826086208bb74ab2";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();`
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?dc047fc743d8342d826086208bb74ab2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();`
     ],
     // 微软Clarity分析官方代码，直接添加到head中
     [
