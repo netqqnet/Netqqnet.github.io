@@ -141,7 +141,15 @@ export default defineConfig({
     },
     nav: [
       { text: '首页', link: '/' }, 
-      { text: "福利开户🔥", link: '/kh' }
+      {
+        text: "投资开户",
+        items: [
+          { text: "🔥大A开户", link: "/kh" },
+          { text: "港美股开户", link: "/business/gm" },
+          { text: "期货开户", link: "/business/qh" },
+        ],
+      },
+      // { text: "大A开户🔥", link: '/kh' }
     ],
     search: {
       provider: 'local'
