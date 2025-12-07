@@ -145,8 +145,8 @@ export default defineConfig({
         text: "投资开户",
         items: [
           { text: "🔥大A开户", link: "/kh" },
-          { text: "港美股开户", link: "/business/gm" },
-          { text: "期货开户", link: "/business/qh" },
+          { text: "港美股开户", link: "/Business/gmg" },
+          { text: "期货开户", link: "/Business/qh" },
         ],
       },
       // { text: "大A开户🔥", link: '/kh' }
