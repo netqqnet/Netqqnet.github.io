@@ -22,7 +22,7 @@
         "特色": "上市券商，起收低，达标要求简单",
         "是否高端": false,
         "visible": true,
-        "recommend": true
+        "recommend": false
     },
     {
         "券商代号": "CC",
@@ -297,7 +297,7 @@
         "调佣流程": "入金三万之后联系客户经理调佣，然后需要确定佣金，确定之后，3天调整好佣金",
         "是否高端": false,
         "visible": true,
-        "recommend": false
+        "recommend": true
     },
     {
         "券商代号": "HX",
