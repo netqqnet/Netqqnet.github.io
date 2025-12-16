@@ -403,7 +403,7 @@
         "recommend": false
     },
     {
-        "券商代号": "YH2",
+        "券商代号": "YH",
         "券商": "银河",
         "推荐语": "两融优势",
         "入金门槛": "50万",
@@ -424,8 +424,8 @@
         "永久费率要求": "入金50万并保持2个月，且交易10000以上股票或者权益类ETF",
         "特色": "1.融券资源丰富；|2. 送QMT和Ptrade",
         "是否高端": true,
-        "visible": false,
-        "recommend": false
+        "visible": true,
+        "recommend": true
     },
     {
         "券商代号": "GF",
