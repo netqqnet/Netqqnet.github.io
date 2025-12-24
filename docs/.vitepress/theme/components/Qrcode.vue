@@ -24,7 +24,7 @@ onMounted(() => {
         break;
       // 可以添加更多渠道
       default:
-        qrcodeUrl.value = '/qrcode/qiwei2_pp.png';
+        qrcodeUrl.value = '/qrcode/qw_alan.png';
     }
   } catch (error) {
     console.error('Failed to get URL params:', error);
