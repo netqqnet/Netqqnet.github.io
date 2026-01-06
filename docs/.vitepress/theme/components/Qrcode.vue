@@ -22,9 +22,12 @@ onMounted(() => {
       case '2':
         qrcodeUrl.value = '/qrcode/xinyuqw.png';
         break;
+      case '3':
+        qrcodeUrl.value = '/qrcode/qw_jinli.jpg';
+        break;
       // 可以添加更多渠道
       default:
-        qrcodeUrl.value = '/qrcode/qw_alan.png';
+        qrcodeUrl.value = '/qrcode/qw_jinli.jpg';
     }
   } catch (error) {
     console.error('Failed to get URL params:', error);
