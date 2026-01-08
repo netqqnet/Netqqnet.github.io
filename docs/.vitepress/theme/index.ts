@@ -2,6 +2,7 @@ import Teek from "vitepress-theme-teek";
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
 import BrokerTable from "./components/BrokerTable.vue";
 import Qrcode from "./components/Qrcode.vue";
+import { setCookie } from "./utils/cookie";
 
 // Teek 本地主题包引用（与 Teek 在线主题包引用 二选一）
 // 当前引入文件为 scss，需要执行 pnpm add sass，如果不想安装额外依赖，可以直接引入 Teek 已经构建好的 css 文件，请看 https://vp.teek.top/styles-plus.html
@@ -40,8 +41,19 @@ import "./styles/iframe.scss";
 export default {
   extends: Teek,
   Layout: TeekLayoutProvider,
-  enhanceApp({ app }) {
+  enhanceApp({ app, router }: { app: any, router: any }) {
     app.component('BrokerTable', BrokerTable);
     app.component('Qrcode', Qrcode);
+
+    // 全局路由守卫：捕获并保存 utm_source
+    if (typeof window !== 'undefined') {
+      // 首次加载检查
+      const urlParams = new URLSearchParams(window.location.search);
+      const utmSource = urlParams.get('utm_source');
+      if (utmSource) {
+        // 使用 Cookie 存储，有效期 30 天
+        setCookie('utm_source', utmSource, 30);
+      }
+    }
   }
 };
