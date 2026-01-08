@@ -18,7 +18,7 @@ export interface CustomConfig {
 
 export const customConfig: CustomConfig = {
   qrcode: {
-    default: QR_IMAGES.ALAN,
+    default: QR_IMAGES.PP,
     channels: {
       // 渠道名(小写): 二维码路径
       'v2ex': QR_IMAGES.JINLI,
