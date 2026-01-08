@@ -6,28 +6,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { customConfig } from '../customConfig';
 
-const qrcodeUrl = ref<string>('/qrcode/qiwei2_pp.png');
+const qrcodeConfig = customConfig.qrcode;
+const qrcodeUrl = ref<string>(qrcodeConfig.default);
 
 onMounted(() => {
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const channel = urlParams.get('channel');
+    const utmSource = urlParams.get('utm_source');
     
     // 根据不同渠道设置不同二维码
-    switch (channel) {
-      case '1':
-        qrcodeUrl.value = '/qrcode/qiwei2_pp.png';
-        break;
-      case '2':
-        qrcodeUrl.value = '/qrcode/xinyuqw.png';
-        break;
-      case '3':
-        qrcodeUrl.value = '/qrcode/qw_jinli.jpg';
-        break;
-      // 可以添加更多渠道
-      default:
-        qrcodeUrl.value = '/qrcode/qw_alan.png ';
+    if (utmSource) {
+      const source = utmSource.toLowerCase();
+      
+      if (qrcodeConfig.channels[source]) {
+        qrcodeUrl.value = qrcodeConfig.channels[source];
+      }
     }
   } catch (error) {
     console.error('Failed to get URL params:', error);
