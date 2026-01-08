@@ -2,7 +2,7 @@
 export const QR_IMAGES = {
   ALAN: '/qrcode/qw_alan.png',
   PP: '/qrcode/qiwei2_pp.png',
-  Qing: '/qrcode/Qingqw.png',
+  QING: '/qrcode/Qingqw.png',
   JINLI: '/qrcode/qw_jinli.jpg',
 };
 
@@ -25,7 +25,7 @@ export const customConfig: CustomConfig = {
       'linuxdo': QR_IMAGES.ALAN,
       '55188': QR_IMAGES.ALAN,
       'tbg': QR_IMAGES.ALAN,
-      'iitang': QR_IMAGES.Qing,
+      'iitang': QR_IMAGES.QING,
     }
   }
 };
