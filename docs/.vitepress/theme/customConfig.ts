@@ -4,6 +4,7 @@ export const QR_IMAGES = {
   PP: '/qrcode/qiwei2_pp.png',
   QING: '/qrcode/Qingqw.png',
   JINLI: '/qrcode/qw_jinli.jpg',
+  LAOFENG: '/qrcode/laofeng.png',
 };
 
 export interface QrcodeConfig {
@@ -22,7 +23,7 @@ export const customConfig: CustomConfig = {
     channels: {
       // 渠道名(小写): 二维码路径
       'v2ex': QR_IMAGES.JINLI,
-      'linuxdo': QR_IMAGES.ALAN,
+      'linuxdo': QR_IMAGES.LAOFENG,
       '55188': QR_IMAGES.ALAN,
       'tbg': QR_IMAGES.ALAN,
       'iitang': QR_IMAGES.QING,
