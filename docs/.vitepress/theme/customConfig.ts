@@ -21,7 +21,6 @@ export const customConfig: CustomConfig = {
   qrcode: {
     default: QR_IMAGES.PP,
     channels: {
-      // 渠道名(小写): 二维码路径
       'v2ex': QR_IMAGES.JINLI,
       'linuxdo': QR_IMAGES.LAOFENG,
       '55188': QR_IMAGES.ALAN,
