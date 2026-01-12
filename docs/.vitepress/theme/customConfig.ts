@@ -5,6 +5,7 @@ export const QR_IMAGES = {
   QING: '/qrcode/Qingqw.png',
   JINLI: '/qrcode/qw_jinli.jpg',
   LAOFENG: '/qrcode/laofeng.png',
+  CHAN: '/qrcode/chan.png',
 };
 
 export interface QrcodeConfig {
@@ -19,7 +20,7 @@ export interface CustomConfig {
 
 export const customConfig: CustomConfig = {
   qrcode: {
-    default: QR_IMAGES.PP,
+    default: QR_IMAGES.CHAN,
     channels: {
       'v2ex': QR_IMAGES.JINLI,
       'linuxdo': QR_IMAGES.LAOFENG,
