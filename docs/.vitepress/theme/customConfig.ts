@@ -22,7 +22,7 @@ export const customConfig: CustomConfig = {
   qrcode: {
     default: QR_IMAGES.CHAN,
     channels: {
-      'v2ex': QR_IMAGES.JINLI,
+      'v2ex': QR_IMAGES.ALAN,
       'linuxdo': QR_IMAGES.LAOFENG,
       '55188': QR_IMAGES.ALAN,
       'tbg': QR_IMAGES.ALAN,
