@@ -294,7 +294,7 @@
         "特色": "1. 免费签约投顾(每周1-2只票，不盈利不收费)；2. 赠送智能选股助手/Level2/新客理财；3. 支持QMT/Ptrade；4. 智能条件单/夜市委托/自主盯盘",
         "是否高端": false,
         "visible": true,
-        "recommend": true
+        "recommend": false
     },
     {
         "券商代号": "GR",
