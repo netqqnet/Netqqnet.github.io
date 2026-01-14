@@ -270,7 +270,7 @@
         "调佣流程": "开户成功后两个交易日内联系客户经理调佣，点击'业务办理一佣金确认'确认佣金",
         "是否高端": false,
         "visible": true,
-        "recommend": true
+        "recommend": false
     },
     {
         "券商代号": "GR",
