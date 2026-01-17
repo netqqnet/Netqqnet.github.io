@@ -20,13 +20,14 @@ export interface CustomConfig {
 
 export const customConfig: CustomConfig = {
   qrcode: {
-    default: QR_IMAGES.CHAN,
+    default: QR_IMAGES.PP,
     channels: {
-      'v2ex': QR_IMAGES.TUZI,
-      'linuxdo': QR_IMAGES.LAOFENG,
+      'v2ex': QR_IMAGES.TUZI,//锦鲤
+      'linuxdo': QR_IMAGES.LAOFENG,//西瓜
       '55188': QR_IMAGES.ALAN,
       'tbg': QR_IMAGES.ALAN,
       'iitang': QR_IMAGES.QING,
+      'NS': QR_IMAGES.CHAN,
     }
   }
 };
