@@ -27,7 +27,8 @@ export const customConfig: CustomConfig = {
       '55188': QR_IMAGES.ALAN,
       'tbg': QR_IMAGES.ALAN,
       'iitang': QR_IMAGES.QING,
-      'NS': QR_IMAGES.CHAN,
+      'NS': QR_IMAGES.CHAN,//婵婵
+      'dalao': QR_IMAGES.CHAN,
     }
   }
 };
