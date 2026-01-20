@@ -366,7 +366,7 @@
         "永久费率要求": "入1.5万保持3个月，并交易一笔",
         "调佣流程": "开户入金后，2个工作日左右调好",
         "是否高端": false,
-        "visible": true,
+        "visible": false,
         "recommend": false
     },    
     {
